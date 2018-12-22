@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "@cljs-oss/module-deps": "^1.1.1",
+    "blessed": "^0.1.81",
+    "create-react-class": "^15.6.3",
+    "neo-blessed": "^0.2.0",
+    "react": "^16.6.3",
+    "react-blessed": "^0.5.0",
+    "react-dom": "^16.6.3",
+    "ws": "^6.1.2"
+  }
+}
