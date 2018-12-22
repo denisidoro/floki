@@ -7,7 +7,8 @@
                  [reagent "0.8.1" :exclusions [[cljsjs/react]
                                                [cljsjs/react-dom]
                                                [cljsjs/create-react-class]]]
-                 [re-frame "0.10.6"]]
+                 [re-frame "0.10.6"]
+                 [fipp "0.6.14"]]
   :plugins [[lein-cljsbuild "1.1.7" :exclusions [[org.clojure/clojure]]]
             [lein-figwheel "0.5.17"]]
   :source-paths ["src"]
@@ -17,7 +18,7 @@
                         :figwheel     {:on-jsload "floki.core/load"}
                         :compiler     {:main                 floki.core
                                        :asset-path           "target/js/compiled/dev"
-                                       :output-to            "target/js/compiled/hello_react_blessed.js"
+                                       :output-to            "target/js/compiled/floki.js"
                                        :output-dir           "target/js/compiled/dev"
                                        :target               :nodejs
                                        :optimizations        :none
