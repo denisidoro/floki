@@ -16,7 +16,7 @@ job_defaults: &defaults
 jobs:
   deps:
     <<: *defaults
-    deps:
+    steps:
       - checkout
       - restore_cache:
           keys:
@@ -38,7 +38,7 @@ jobs:
 
 workflows:
   version: 2
-  xablau:
+  build:
     jobs:
       - deps
       - build:
