@@ -14,3 +14,13 @@
   :count-up
   (fn [db _]
     (update db :count inc)))
+
+(rf/reg-event-db
+  :timer
+  (fn [db [_ time]]
+    (assoc db :time time)))
+
+(rf/reg-event-db
+  :list-select
+  (fn [db [_ item index]]
+    (assoc db :list item)))

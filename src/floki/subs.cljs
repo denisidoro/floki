@@ -10,3 +10,13 @@
   :db
   (fn [db _]
     db))
+
+(rf/reg-sub
+  :input
+  (fn [db _]
+    (:input db)))
+
+(rf/reg-sub
+  :list
+  (fn [db _]
+    (:list db)))

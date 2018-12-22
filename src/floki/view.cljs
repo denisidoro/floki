@@ -1,7 +1,8 @@
 (ns floki.view
   (:require [re-frame.core :as rf]
             [common.print.core :as print]
-            [reagent.core :as r]))
+            [reagent.core :as r]
+            [clojure.string :as str]))
 
 (defonce logger
   (r/atom []))
@@ -13,10 +14,9 @@
     :top     0
     :height  2
     :width   50
-    :content (-> @(rf/subscribe [:time])
-                 .toTimeString
-                 (clojure.string/split " ")
-                 first)
+    :content (-> {:a {:b 1 :c {:d 42}}}
+                 (get-in [:a :b])
+                 str)
     }])
 
 (defn log-box [n]
@@ -44,7 +44,17 @@
 (defn temp
   []
   [:list
-   {:items ["hi" "hello"]}])
+   {:keys       true
+    :mouse      true
+    :vi         true
+    :items      (->> @(rf/subscribe [:input])
+                     :a
+                     keys
+                     ;(mapv print/pprint-str)
+                     )
+    :selectedBg "green"
+    :onAction   (fn [item index] (rf/dispatch [:list-select (-> (.getContent item) keyword) index]))}
+   ])
 
 (defn root [_]
   [:box#base {:left   0
