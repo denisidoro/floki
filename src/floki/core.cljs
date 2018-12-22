@@ -5,8 +5,8 @@
    [re-frame.core :as rf]
    [blessed :as blessed]                                    ; or use neo-blessed
    ["react-blessed" :as rb]
-   [ws]
-   [core.print.core :as print]))
+    [core.print.core :as print]
+   ))
 
 (defonce logger (reagent/atom []))
 
