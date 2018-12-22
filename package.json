@@ -5,6 +5,7 @@
     "create-react-class": "^15.6.3",
     "react": "^16.6.3",
     "react-blessed": "^0.5.0",
-    "react-dom": "^16.6.3"
+    "react-dom": "^16.6.3",
+    "ws": "^6.1.2"
   }
 }
