@@ -5,9 +5,9 @@
 ; For the original source, please refer to 
 ; https://github.com/mfikes/planck/blob/master/planck-cljs/src/planck/themes.cljs
 
-(ns core.print.themes
+(ns common.print.themes
   "Color theme management."
-  (:require [core.print.ansi :as ansi]))
+  (:require [common.print.ansi :as ansi]))
 
 (def ^:private colorize-fn-dumb identity)
 (def ^:private ^:const colorize-off-dumb "")

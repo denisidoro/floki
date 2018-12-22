@@ -5,7 +5,7 @@
 ; For the original source, please refer to 
 ; https://github.com/mfikes/planck/blob/master/planck-cljs/src/planck/from/io/aviso/ansi.clj
 
-(ns core.print.ansi
+(ns common.print.ansi
   (:require [clojure.string :as str]))
 
 (def ^:private ^:const csi

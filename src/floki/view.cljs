@@ -1,6 +1,6 @@
 (ns floki.view
   (:require [re-frame.core :as rf]
-            [core.print.core :as print]
+            [common.print.core :as print]
             [reagent.core :as r]))
 
 (defonce logger
@@ -41,13 +41,26 @@
            :content (print/pprint-str @(rf/subscribe [:db]))}]
    [log-box (dec height)]])
 
+(defn temp
+  []
+  [:list
+   {:items ["hi" "hello"]}])
+
 (defn root [_]
   [:box#base {:left   0
               :right  0
               :width  "100%"
               :height "100%"}
    [:box {:bottom 11
-          :label  "Box label"
+          :left   0
+          :width  "20%"
+          :label  "Left box"
+          :border {:type :line}}
+    [temp]]
+   [:box {:bottom 11
+          :right  0
+          :width  "30%"
+          :label  "Right box"
           :border {:type :line}}
     [clock]]
    [debug-box {:height 10}]])
