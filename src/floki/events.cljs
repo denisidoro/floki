@@ -14,8 +14,3 @@
   :count-up
   (fn [db _]
     (update db :count inc)))
-
-(rf/reg-event-db
-  :timer
-  (fn [db [_ new-time]]
-    (assoc db :time new-time)))
