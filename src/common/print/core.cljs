@@ -5,14 +5,14 @@
 ; For the original source, please refer to 
 ; https://github.com/mfikes/planck/blob/master/planck-cljs/src/planck/pprint/data.cljs
 
-(ns core.print.core
+(ns common.print.core
   "Pretty printing for data."
   (:refer-clojure :exclude [lift-ns])
   (:require [clojure.string :as string]
             [fipp.engine :refer [pprint-document]]
             [fipp.visit :refer [visit visit*]]
             [goog.object :as gobj]
-            [core.print.themes :as themes]
+            [common.print.themes :as themes]
             [cljs.pprint :as cljprint]))
 
 (defn pretty-coll [{:keys [print-level print-length] :as printer}

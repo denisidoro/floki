@@ -1,5 +1,7 @@
-(ns floki.keys)
+(ns floki.keys
+  (:require [re-frame.core :as rf]))
 
 (defn setup
   [screen]
-  (.key screen #js ["escape" "q" "C-c"] #(.exit js/process 0)))
+  (.key screen #js ["escape" "q" "C-c"] #(.exit js/process 0))
+  (.key screen #js ["j"] #(rf/dispatch [:count-up])))
