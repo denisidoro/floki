@@ -5,7 +5,8 @@
    [re-frame.core :as rf]
    [blessed :as blessed]                                    ; or use neo-blessed
    ["react-blessed" :as rb]
-   [ws]))
+   [ws]
+   [core.print.core :as print]))
 
 (defonce logger (reagent/atom []))
 
@@ -54,9 +55,10 @@
     :height  2
     :width   50
     :content (-> @(rf/subscribe [:time])
-                 .toTimeString
-                 (clojure.string/split " ")
-                 first)}])
+                   .toTimeString
+                   (clojure.string/split " ")
+                   first)
+             }])
 
 
 (defn log-box [n]
@@ -78,7 +80,7 @@
                 :border {:type :line}
                 :label  "Debug info"}
    [:text {:width   "40%"
-           :content (str @(rf/subscribe [:db]))}]
+           :content (print/pprint-str @(rf/subscribe [:db]))}]
    [log-box (dec height)]])
 
 (defn example [_]
