@@ -1,0 +1,96 @@
+# Clojure CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-clojure/ for more details
+#
+version: 2
+
+job_defaults: &defaults
+    docker:
+      - image: circleci/clojure:lein-2.7.1
+    working_directory: ~/repo
+    environment:
+      LEIN_ROOT: "true"
+      # Customize the JVM maximum heap limit
+      JVM_OPTS: "-Xmx3600m"
+      ENVIRONMENT: "test"
+
+jobs:
+  build:
+    <<: *defaults
+    # Download and cache dependencies
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "project.clj" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+      - run: lein deps
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: v1-dependencies-{{ checksum "project.clj" }}
+
+  test-midje:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "project.clj" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+      - run: echo '(change-defaults :print-level :print-facts)' > $HOME/.midje.clj
+      - run: lein midje
+
+  test-postman:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "project.clj" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+      - run: echo '(change-defaults :print-level :print-facts)' > $HOME/.midje.clj
+      - run: lein postman
+
+  lint-cljfmt:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "project.clj" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+      - run: lein cljfmt check
+
+  lint-kibit:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "project.clj" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+      - run: lein kibit
+
+workflows:
+  version: 2
+  pull-request-validation:
+    jobs:
+      - build
+      - test-midje:
+          requires:
+            - build
+      - test-postman:
+          requires:
+            - build
+      - lint-cljfmt:
+          requires:
+            - build
+      # - lint-kibit:
+      #     requires:
+      #       - build
