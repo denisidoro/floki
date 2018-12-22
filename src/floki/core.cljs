@@ -1,15 +1,13 @@
 (ns floki.core
   (:require [cljs.nodejs :as nodejs]
-            [reagent.core :as reagent]
+            [reagent.core :as r]
             [re-frame.core :as rf]
             [blessed :as blessed]                           ; or use neo-blessed
-            ["react-blessed" :as rb]
+            ["react-blessed" :as react-blessed]
+            [floki.keys :as keys]
             [floki.subs]
             [floki.events]
             [floki.view :as view]))
-
-(defonce logger
-  (reagent/atom []))
 
 (defonce screen
   (blessed/screen #js {:autoPadding true
@@ -17,9 +15,9 @@
                        :title       "Hello react blessed"}))
 
 (defonce render
-  (rb/createBlessedRenderer blessed))
+  (react-blessed/createBlessedRenderer blessed))
 
-(.key screen #js ["escape" "q" "C-c"] #(.exit js/process 0))
+(keys/setup screen)
 
 (defn dispatch-timer-event
   []
@@ -30,8 +28,8 @@
   (js/setInterval dispatch-timer-event 1000))
 
 (defn load []
-  (-> (reagent/reactify-component view/root)
-      (reagent/create-element #js {})
+  (-> (r/reactify-component view/root)
+      (r/create-element #js {})
       (render screen)))
 
 (defn -main []
@@ -39,10 +37,9 @@
   (load))
 
 (defn log-fn [& args]
-  (swap! logger conj (clojure.string/join " " args)))
+  (swap! view/logger conj (clojure.string/join " " args)))
 
 ;; Hack to prevent figwheel, which prints to console.log, overwriting the "render"
-
 (set! (.-log js/console) log-fn)
 
 (re-frame.loggers/set-loggers! {:log log-fn, :warn log-fn})

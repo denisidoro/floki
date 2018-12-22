@@ -1,6 +1,10 @@
 (ns floki.view
   (:require [re-frame.core :as rf]
-            [core.print.core :as print]))
+            [core.print.core :as print]
+            [reagent.core :as r]))
+
+(defonce logger
+  (r/atom []))
 
 (defn clock
   []
