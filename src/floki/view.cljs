@@ -3,7 +3,8 @@
             [common.print.core :as print]
             [reagent.core :as r]
             [clojure.string :as str]
-            [clojure.pprint :as pprint]))
+            [clojure.pprint :as pprint]
+            [floki.logic :as l]))
 
 (defonce logger
          (r/atom []))
@@ -16,8 +17,9 @@
     :height  2
     :width   50
     :content (-> @(rf/subscribe [:extract])
-                 ;print/pprint-str
-                 pprint/pprint)
+                 print/pprint-str
+                 ;pprint/pprint
+                 )
     }])
 
 (defn log-box [n]
@@ -42,36 +44,22 @@
            :content (print/pprint-str @(rf/subscribe [:db]))}]
    [log-box (dec height)]])
 
-(defn temp2-inner
-  []
-  (let [ref* (atom nil)
-        update (fn [com]
-                 (some-> @ref* (.select (-> com r/props :extract first :index))))]
-    (r/create-class
-      {:component-did-update
-       update
-
-       :reagent-render
-       (fn []
-         [:list
-          {:ref (fn [ref] (reset! ref* ref))
-           :items      (->>
-                         @(rf/subscribe [:root-keys])
-                         (mapcat :keys)
-                         (map str))
-           :selectedBg "green"
-           }
-          ])})))
-
-(defn temp2-outer
-  []
-  [temp2-inner {:extract @(rf/subscribe [:extract]) }])
-
 (defn temp3-inner
   []
   (let [ref* (atom nil)
+        index (-> (r/current-component) r/props :index)
+        get-fn #(try
+                    (let [x (->> % (keep :index) count dec)
+                           coll (drop x %)]
+                         (case index
+                           0 (first coll)
+                           1 (second coll)))
+                         (catch js/Error e
+                           (do (print e)
+                               {})))
         update (fn [com]
-                 (some-> @ref* (.select (-> com r/props :extract second :index))))]
+                 (when-let [selected-index (some-> com r/props :extract get-fn :index)]
+                  (some-> @ref* (.select selected-index))))]
     (r/create-class
       {:component-did-update
        update
@@ -79,18 +67,21 @@
        :reagent-render
        (fn []
          [:list
-          {:ref (fn [ref] (reset! ref* ref))
-           :items      (->>
-                         @(rf/subscribe [:secondary-keys])
-                         (mapcat :keys)
-                         (map str))
+          {:ref        (fn [ref] (reset! ref* ref))
+           :items      (->> (r/current-component)
+                             r/props
+                             :extract
+                             get-fn
+                             :keys
+                             (map str))
            :selectedBg "green"
            }
           ])})))
 
 (defn temp3-outer
-  []
-  [temp3-inner {:extract @(rf/subscribe [:extract]) }])
+  [index]
+  [temp3-inner {:extract @(rf/subscribe [:extract])
+                :index index}])
 
 (defn root [_]
   [:box#base {:left   0
@@ -102,13 +93,13 @@
           :width  "20%"
           :label  "Left box"
           :border {:type :line}}
-    [temp2-outer]]
+    [temp3-outer 0]]
    [:box {:bottom 11
           :left   "20%"
           :width  "20%"
           :label  "Middle box"
           :border {:type :line}}
-    [temp3-outer]]
+    [temp3-outer 1]]
    [:box {:bottom 11
           :right  0
           :width  "60%"

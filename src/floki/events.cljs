@@ -3,7 +3,7 @@
             [floki.logic :as l]))
 
 (def input
-  {:a {:b 1 :c {:d 42} :john 44}
+  {:a {:b 1 :c {:d {:e 53}} :john 44}
    :x 42
    :y 45})
 

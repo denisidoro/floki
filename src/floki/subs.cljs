@@ -13,6 +13,12 @@
     db))
 
 (rf/reg-sub
+  :pos
+  (fn [{:keys [x y]} _]
+    {:x x
+     :y y}))
+
+(rf/reg-sub
   :input
   (fn [db _]
     (:input db)))
