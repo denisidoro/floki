@@ -8,25 +8,19 @@
    :y 45})
 
 (rf/reg-event-db
-  :initialize
+  :init
   (fn [_ _]
-    {:time  (js/Date.)
-     :input input
-     :y 0
-     :x 0
-     :list  [:a]}))
-
-(rf/reg-event-db
-  :y-up
-  (fn [db _]
-    (update db :y inc)))
+    {:tree/input input
+     :pos/x 0
+     :pos/y 0
+     :tree/path  [:a]}))
 
 (rf/reg-event-db
   :movement/down
   (fn [db _]
     (if (l/vertical-allowed? db 1)
       (-> db
-                                  (update :y inc)
+                                  (update :pos/y inc)
                                   (l/update-list 0))
       db)))
 
@@ -35,7 +29,7 @@
   (fn [db _]
     (if (l/vertical-allowed? db -1)
       (-> db
-                                  (update :y dec)
+                                  (update :pos/y dec)
                                   (l/update-list 0))
       db)))
 
@@ -44,8 +38,8 @@
   (fn [db _]
     (if (l/horizontal-allowed? db 1)
       (-> db
-                                         (assoc :y 0)
-                                         (update :x inc)
+                                         (assoc :pos/y 0)
+                                         (update :pos/x inc)
                                          (l/update-list 1))
       db)))
 
@@ -54,17 +48,7 @@
   (fn [db _]
     (if (l/horizontal-allowed? db -1)
       (-> db
-                                          (assoc :y 0)
-                                          (update :x dec)
+                                          (assoc :pos/y 0)
+                                          (update :pos/x dec)
                                           (l/update-list -1))
       db)))
-
-(rf/reg-event-db
-  :timer
-  (fn [db [_ time]]
-    (assoc db :time time)))
-
-(rf/reg-event-db
-  :list-select
-  (fn [db [_ item index]]
-    (assoc db :list item)))

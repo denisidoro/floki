@@ -17,10 +17,10 @@
     (into acc [{:keys (-> m keys vec)}])
     acc))
 
-(defn extract
-  [input list]
+(defn descs
+  [input path]
   (loop [m input
-         [item & items] list
+         [item & items] path
          acc []]
     (cond
       (not (map? m))
@@ -36,16 +36,10 @@
             res {:keys ks :index index}]
         (recur next-m items (conj acc res))))))
 
-(def extract2 extract)
-
-#_(defn extract2
-    [input list]
-  (into [{:keys (keys input)}] (extract input list)))
-
 (defn update-list
-    [{:keys [input x y list] :as db}
+    [{:keys [tree/input tree/path pos/x pos/y] :as db}
      element-increase]
-  (let [data (extract2 input list)
+  (let [data (descs input path)
         get-fn #(get % x)
         ks (-> data get-fn :keys vec)
         item (get ks y)
@@ -53,24 +47,24 @@
                 -1 (drop-last 2 %)
                 0 (drop-last %)
                 1 %)
-        new-list (-> list crop vec (conj item))]
+        new-path (-> path crop vec (conj item))]
     (if item
-      (assoc db :list new-list)
-      (update db :x dec element-increase))))
+      (assoc db :tree/path new-path)
+      (update db :pos/x dec element-increase))))
 
 (defn vertical-allowed?
-    [{:keys [input list x y]}
+    [{:keys [tree/input tree/path pos/x pos/y]}
      increase]
-  (let [data (extract2 input list)
+  (let [data (descs input path)
         total-items (-> data (get x) count)
         res (+ y increase)]
     (and (not (neg? res))
          (<= res total-items))))
 
 (defn horizontal-allowed?
-  [{:keys [input list x y]}
+  [{:keys [tree/input tree/path pos/x pos/y]}
    increase]
-  (let [data (extract2 input list)
+  (let [data (descs input path)
         total-items (-> data (get y) count)
         res (+ x increase)]
     (and (not (neg? res))

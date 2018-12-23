@@ -3,68 +3,30 @@
             [floki.logic :as l]))
 
 (rf/reg-sub
-  :time
-  (fn [db _]
-    (:time db)))
-
-(rf/reg-sub
   :db
   (fn [db _]
     db))
 
 (rf/reg-sub
-  :pos
-  (fn [{:keys [x y]} _]
-    {:x x
-     :y y}))
-
-(rf/reg-sub
-  :input
+  :tree/input
   (fn [db _]
-    (:input db)))
+    (:tree/input db)))
 
 (rf/reg-sub
-  :list
+  :tree/path
   (fn [db _]
-    (:list db)))
+    (:tree/path db)))
 
 (rf/reg-sub
-  :extract
-  :<- [:input]
-  :<- [:list]
-  (fn [[input list]]
-    (let [e (l/extract input list)]
-      (print e)
-      e)))
+  :tree/descs
+  :<- [:tree/input]
+  :<- [:tree/path]
+  (fn [[input path]]
+    (l/descs input path)))
 
 (rf/reg-sub
-  :root-keys
-  :<- [:extract]
-  (fn [extract]
-    (take 1 extract)))
-
-(rf/reg-sub
-  :secondary-keys
-  :<- [:extract]
-  (fn [extract]
-    (->> extract
-         (drop 1)
-         (take 1))))
-
-(rf/reg-sub
-  :preview
-  :<- [:input]
-  :<- [:list]
-  (fn [[input list]]
-    (get-in input list)))
-
-(rf/reg-sub :y
-            (fn [db]
-              (:y db)))
-
-(rf/reg-sub
-  :preview2
-  :<- [:input]
-  :<- [:list]
-  (fn [[input list]]
-    :todo))
+  :preview/data
+  :<- [:tree/input]
+  :<- [:tree/path]
+  (fn [[input path]]
+    (get-in input path)))

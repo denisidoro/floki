@@ -19,21 +19,13 @@
 
 (keys/setup screen)
 
-(defn dispatch-timer-event
-  []
-  (let [now (js/Date.)]
-    (rf/dispatch [:timer now])))
-
-(defonce do-timer
-  (js/setInterval dispatch-timer-event 1000))
-
 (defn load []
   (-> (r/reactify-component view/root)
       (r/create-element #js {})
       (render screen)))
 
 (defn -main []
-  (rf/dispatch-sync [:initialize])
+  (rf/dispatch-sync [:init])
   (load))
 
 (defn log-fn [& args]

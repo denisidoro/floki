@@ -1,6 +1,5 @@
 (ns floki.view
   (:require [re-frame.core :as rf]
-            [common.print.core :as print]
             [reagent.core :as r]
             [clojure.string :as str]
             [clojure.pprint :as pprint]
@@ -9,21 +8,16 @@
 (defonce logger
          (r/atom []))
 
-(defn p
-  [& x]
-  (with-out-str
-    (apply pprint/pprint x)))
-
-(defn clock
+(defn preview
   []
   [:text
    {:left    0
     :top     0
     :height  2
     :width   50
-    :content (-> @(rf/subscribe [:preview])
+    :content (-> @(rf/subscribe [:preview/data])
                  ;print/pprint-str
-                 p
+                 str
                  )
     }])
 
@@ -46,10 +40,10 @@
                 :border {:type :line}
                 :label  "Debug info"}
    [:text {:width   "40%"
-           :content (print/pprint-str @(rf/subscribe [:db]))}]
+           :content (str @(rf/subscribe [:db]))}]
    [log-box (dec height)]])
 
-(defn temp3-inner
+(defn list-native-pane
   []
   (let [ref* (atom nil)
         index (-> (r/current-component) r/props :index)
@@ -63,7 +57,7 @@
                            (do (print e)
                                {})))
         update (fn [com]
-                 (when-let [selected-index (some-> com r/props :extract get-fn :index)]
+                 (when-let [selected-index (some-> com r/props :descs get-fn :index)]
                   (some-> @ref* (.select selected-index))))]
     (r/create-class
       {:component-did-update
@@ -75,7 +69,7 @@
           {:ref        (fn [ref] (reset! ref* ref))
            :items      (->> (r/current-component)
                              r/props
-                             :extract
+                             :descs
                              get-fn
                              :keys
                              (map str))
@@ -83,10 +77,10 @@
            }
           ])})))
 
-(defn temp3-outer
+(defn list-pane
   [index]
-  [temp3-inner {:extract @(rf/subscribe [:extract])
-                :index index}])
+  [list-native-pane {:descs @(rf/subscribe [:tree/descs])
+                :index        index}])
 
 (defn root [_]
   [:box#base {:left   0
@@ -98,17 +92,17 @@
           :width  "20%"
           :label  "Left box"
           :border {:type :line}}
-    [temp3-outer 0]]
+    [list-pane 0]]
    [:box {:bottom 11
           :left   "20%"
           :width  "20%"
           :label  "Middle box"
           :border {:type :line}}
-    [temp3-outer 1]]
+    [list-pane 1]]
    [:box {:bottom 11
           :right  0
           :width  "60%"
           :label  "Right box"
           :border {:type :line}}
-    [clock]]
+    [preview]]
    [debug-box {:height 10}]])
