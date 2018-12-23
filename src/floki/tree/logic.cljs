@@ -7,9 +7,20 @@
     (into acc [{:keys (-> m keys vec)}])
     acc))
 
+(defn xablau
+  [m]
+  (clojure.walk/postwalk
+    (fn [x] (if (set? x)
+              (->> x
+                   vec
+                   (map-indexed (fn [index item] [index item]))
+                   (into {}))
+              x))
+    m))
+
 (defn descs
   [input path]
-  (loop [m input
+  (loop [m (xablau input)
          [item & items] path
          acc []]
     (cond
