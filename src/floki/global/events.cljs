@@ -1,4 +1,4 @@
-(ns floki.events
+(ns floki.global.events
   (:require [re-frame.core :as rf]
             [floki.movement.events]))
 
