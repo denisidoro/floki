@@ -22,16 +22,14 @@
     [{:keys [tree/input tree/path pos/x pos/y]}
      increase]
   (let [data (l.tree/descs input path)
-        total-items (-> data (get x) count)
+        total-items (-> data (get x) :keys count)
         res (+ y increase)]
     (and (not (neg? res))
-         (<= res total-items))))
+         (< res total-items))))
 
 (defn horizontal-allowed?
-  [{:keys [tree/input tree/path pos/x pos/y]}
+  [{:keys [tree/input tree/path pos/x]}
    increase]
   (let [data (l.tree/descs input path)
-        total-items (-> data (get y) count)
-        res (+ x increase)]
-    (and (not (neg? res))
-         (<= res total-items))))
+        total-items (-> data (get (+ increase x)) :keys count)]
+    (pos? total-items)))

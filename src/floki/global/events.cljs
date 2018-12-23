@@ -3,7 +3,11 @@
             [floki.movement.events]))
 
 (def input
-  {:a {:b 1 :c {:d {:e 53}} :john 44}
+  {:a {:b {:c {:d {:e 53
+                   :hi "hello"}
+               :phillip 44}
+           :mary 42}
+       :john 44}
    :x 42
    :y 45})
 
