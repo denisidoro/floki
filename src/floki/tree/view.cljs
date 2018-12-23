@@ -12,8 +12,7 @@
         index (-> (r/current-component) r/props :index)
         get-fn #(try
                     (let [x (->> % (keep :index) count dec)
-                           coll (drop (dec x) %)
-                          ]
+                           coll (->> % (into [{:keys [:root] :index 0}]) (drop x))]
                          (case index
                            0 (first coll)
                            1 (second coll)))
