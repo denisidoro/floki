@@ -9,6 +9,11 @@
 (defonce logger
          (r/atom []))
 
+(defn p
+  [& x]
+  (with-out-str
+    (apply pprint/pprint x)))
+
 (defn clock
   []
   [:text
@@ -16,9 +21,9 @@
     :top     0
     :height  2
     :width   50
-    :content (-> @(rf/subscribe [:extract])
-                 print/pprint-str
-                 ;pprint/pprint
+    :content (-> @(rf/subscribe [:preview])
+                 ;print/pprint-str
+                 p
                  )
     }])
 

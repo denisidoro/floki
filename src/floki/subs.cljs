@@ -33,7 +33,9 @@
   :<- [:input]
   :<- [:list]
   (fn [[input list]]
-    (l/extract input list)))
+    (let [e (l/extract input list)]
+      (print e)
+      e)))
 
 (rf/reg-sub
   :root-keys
