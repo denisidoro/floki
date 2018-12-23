@@ -15,6 +15,6 @@
   :init
   (fn [_ _]
     {:tree/input input
-     :pos/x 0
+     :pos/x -1
      :pos/y 0
-     :tree/path  [:a]}))
+     :tree/path  []}))

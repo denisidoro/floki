@@ -33,9 +33,17 @@
 (rf/reg-event-db
   :movement/left
   (fn [db _]
-    (if (l.movement/horizontal-allowed? db -1)
+    (cond
+      (<= (:pos/x db) 0)
+      (assoc db
+        :pos/x -1
+        :tree/path [])
+
+      (l.movement/horizontal-allowed? db -1)
       (-> db
           (assoc :pos/y 0)
           (update :pos/x dec)
           (l.movement/update-list -1))
+
+      :else
       db)))
