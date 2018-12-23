@@ -3,7 +3,7 @@
             [floki.logic :as l]))
 
 (def input
-  {:a {:b 1 :c {:d 42}}
+  {:a {:b 1 :c {:d 42} :john 44}
    :x 42
    :y 45})
 
@@ -12,27 +12,44 @@
   (fn [_ _]
     {:time  (js/Date.)
      :input input
-     :count 0
-     :list  []}))
+     :y 0
+     :x 0
+     :list  [:a]}))
 
 (rf/reg-event-db
-  :count-up
+  :y-up
   (fn [db _]
-    (update db :count inc)))
+    (update db :y inc)))
 
 (rf/reg-event-db
   :movement/down
   (fn [db _]
     (-> db
-        (update :count inc)
-        l/update-list)))
+        (update :y inc)
+        (l/update-list 0))))
 
 (rf/reg-event-db
   :movement/up
   (fn [db _]
     (-> db
-        (update :count dec)
-        l/update-list)))
+        (update :y dec)
+        (l/update-list 0))))
+
+(rf/reg-event-db
+  :movement/right
+  (fn [db _]
+    (-> db
+        (assoc :y 0)
+        (update :x inc)
+        (l/update-list 1))))
+
+(rf/reg-event-db
+  :movement/left
+  (fn [db _]
+    (-> db
+        (assoc :y 0)
+        (update :x dec)
+        (l/update-list -1))))
 
 (rf/reg-event-db
   :timer

@@ -23,9 +23,25 @@
     (:list db)))
 
 (rf/reg-sub
+  :extract
+  :<- [:input]
+  :<- [:list]
+  (fn [[input list]]
+    (l/extract input list)))
+
+(rf/reg-sub
   :root-keys
-  (fn [{:keys [input]} _]
-    (l/extract2 input [])))
+  :<- [:extract]
+  (fn [extract]
+    (take 1 extract)))
+
+(rf/reg-sub
+  :secondary-keys
+  :<- [:extract]
+  (fn [extract]
+    (->> extract
+         (drop 1)
+         (take 1))))
 
 (rf/reg-sub
   :preview
@@ -34,13 +50,13 @@
   (fn [[input list]]
     (get-in input list)))
 
-(rf/reg-sub :count
+(rf/reg-sub :y
             (fn [db]
-              (:count db)))
+              (:y db)))
 
 (rf/reg-sub
   :preview2
   :<- [:input]
   :<- [:list]
   (fn [[input list]]
-    (l/extract input list)))
+    :todo))
