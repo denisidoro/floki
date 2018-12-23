@@ -5,7 +5,7 @@
             [clojure.string :as str]))
 
 (defonce logger
-  (r/atom []))
+         (r/atom []))
 
 (defn clock
   []
@@ -14,9 +14,8 @@
     :top     0
     :height  2
     :width   50
-    :content (-> {:a {:b 1 :c {:d 42}}}
-                 (get-in [:a :b])
-                 str)
+    :content (->  @(rf/subscribe [:preview2])
+                  print/pprint-str)
     }])
 
 (defn log-box [n]
@@ -43,18 +42,49 @@
 
 (defn temp
   []
-  [:list
-   {:keys       true
-    :mouse      true
-    :vi         true
-    :items      (->> @(rf/subscribe [:input])
-                     :a
-                     keys
-                     ;(mapv print/pprint-str)
-                     )
-    :selectedBg "green"
-    :onAction   (fn [item index] (rf/dispatch [:list-select (-> (.getContent item) keyword) index]))}
-   ])
+  (let [ref* (atom nil)]
+    (r/create-class
+      {:component-did-update
+       (fn []
+         (some-> @ref* (.select @(rf/subscribe [:count]))))
+
+       :reagent-render
+       (fn []
+         [:list
+          {:ref        (fn [ref] (reset! ref* ref))
+           :items      (->>
+                         (into [:a :b :c])
+                         (map str))
+           :selectedBg "green"
+           :onAction   (fn [item index] (rf/dispatch [:list-select (-> (.getContent item) keyword) index]))}
+          ])})))
+
+(defn temp2-inner
+  []
+  (let [ref* (atom nil)
+        update (fn [com]
+                 (some-> @ref* (.select (-> com r/props :index))))]
+    (r/create-class
+      {:component-did-update
+       update
+
+       :component-did-mount
+       update
+
+       :reagent-render
+       (fn []
+         [:list
+          {:ref (fn [ref] (reset! ref* ref))
+           :items      (->>
+                         (into [:a :b :c])
+                         (map str))
+           :selectedBg "green"
+           }
+          ])})))
+
+(defn temp2-outer
+  []
+  [temp2-inner {:index @(rf/subscribe [:count])}])
 
 (defn root [_]
   [:box#base {:left   0
@@ -66,7 +96,7 @@
           :width  "20%"
           :label  "Left box"
           :border {:type :line}}
-    [temp]]
+    [temp2-outer]]
    [:box {:bottom 11
           :right  0
           :width  "30%"

@@ -4,6 +4,7 @@
 (defn setup
   [screen]
   (.key screen #js ["escape" "q" "C-c"] #(.exit js/process 0))
-  ;(.key screen #js ["j"] #(rf/dispatch [:count-up]))
+  (.key screen #js ["j"] #(rf/dispatch [:movement/down]))
+  (.key screen #js ["k"] #(rf/dispatch [:movement/up]))
   )
 
