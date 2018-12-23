@@ -14,7 +14,7 @@
     :top     0
     :height  2
     :width   50
-    :content (->  @(rf/subscribe [:preview2])
+    :content (->  @(rf/subscribe [:preview])
                   print/pprint-str)
     }])
 
@@ -40,25 +40,6 @@
            :content (print/pprint-str @(rf/subscribe [:db]))}]
    [log-box (dec height)]])
 
-(defn temp
-  []
-  (let [ref* (atom nil)]
-    (r/create-class
-      {:component-did-update
-       (fn []
-         (some-> @ref* (.select @(rf/subscribe [:count]))))
-
-       :reagent-render
-       (fn []
-         [:list
-          {:ref        (fn [ref] (reset! ref* ref))
-           :items      (->>
-                         (into [:a :b :c])
-                         (map str))
-           :selectedBg "green"
-           :onAction   (fn [item index] (rf/dispatch [:list-select (-> (.getContent item) keyword) index]))}
-          ])})))
-
 (defn temp2-inner
   []
   (let [ref* (atom nil)
@@ -68,15 +49,13 @@
       {:component-did-update
        update
 
-       :component-did-mount
-       update
-
        :reagent-render
        (fn []
          [:list
           {:ref (fn [ref] (reset! ref* ref))
            :items      (->>
-                         (into [:a :b :c])
+                         @(rf/subscribe [:root-keys])
+                         (mapcat :keys)
                          (map str))
            :selectedBg "green"
            }
@@ -84,7 +63,7 @@
 
 (defn temp2-outer
   []
-  [temp2-inner {:index @(rf/subscribe [:count])}])
+  [temp2-inner {:index @(rf/subscribe [:count]) }])
 
 (defn root [_]
   [:box#base {:left   0
@@ -95,6 +74,12 @@
           :left   0
           :width  "20%"
           :label  "Left box"
+          :border {:type :line}}
+    [temp2-outer]]
+   #_[:box {:bottom 11
+          :left   "20%"
+          :width  "20%"
+          :label  "Middle box"
           :border {:type :line}}
     [temp2-outer]]
    [:box {:bottom 11

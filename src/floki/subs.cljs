@@ -23,11 +23,16 @@
     (:list db)))
 
 (rf/reg-sub
+  :root-keys
+  (fn [{:keys [input]} _]
+    (l/extract2 input [])))
+
+(rf/reg-sub
   :preview
   :<- [:input]
   :<- [:list]
   (fn [[input list]]
-    (get-in input [:a])))
+    (get-in input list)))
 
 (rf/reg-sub :count
             (fn [db]

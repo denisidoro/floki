@@ -1,15 +1,19 @@
 (ns floki.events
-  (:require [re-frame.core :as rf] ))
+  (:require [re-frame.core :as rf]
+            [floki.logic :as l]))
 
 (def input
-  {:a {:b 1 :c {:d 42}}})
+  {:a {:b 1 :c {:d 42}}
+   :x 42
+   :y 45})
 
 (rf/reg-event-db
   :initialize
   (fn [_ _]
     {:time  (js/Date.)
      :input input
-     :list  [:a]}))
+     :count 0
+     :list  []}))
 
 (rf/reg-event-db
   :count-up
@@ -19,12 +23,16 @@
 (rf/reg-event-db
   :movement/down
   (fn [db _]
-    (update db :count inc)))
+    (-> db
+        (update :count inc)
+        l/update-list)))
 
 (rf/reg-event-db
   :movement/up
   (fn [db _]
-    (update db :count dec)))
+    (-> db
+        (update :count dec)
+        l/update-list)))
 
 (rf/reg-event-db
   :timer
