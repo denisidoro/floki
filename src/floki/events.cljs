@@ -4,10 +4,6 @@
 (def input
   {:a {:b 1 :c {:d 42}}})
 
-
-
-
-
 (rf/reg-event-db
   :initialize
   (fn [_ _]

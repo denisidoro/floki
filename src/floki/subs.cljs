@@ -1,29 +1,6 @@
 (ns floki.subs
-  (:require [re-frame.core :as rf]))
-
-(defn find-first
-  [pred coll]
-  (first (filter pred coll)))
-
-(defn first-index
-  [pred coll]
-  (first
-    (map-indexed (fn [item index]
-                   (and (pred index) item))
-                 coll)))
-
-(defn extract
-  [input list]
-  (loop [m input
-         [item & items] list
-         acc []]
-    (if-not item
-      acc
-      (let [ks (keys m)
-            index (first-index #(= item %) ks)
-            next-m (get m item)
-            res {:keys ks :index index}]
-        (recur next-m items (conj acc res))))))
+  (:require [re-frame.core :as rf]
+            [floki.logic :as l]))
 
 (rf/reg-sub
   :time
@@ -61,4 +38,4 @@
   :<- [:input]
   :<- [:list]
   (fn [[input list]]
-    (extract input list)))
+    (l/extract input list)))
