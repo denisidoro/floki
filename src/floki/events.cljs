@@ -24,16 +24,20 @@
 (rf/reg-event-db
   :movement/down
   (fn [db _]
-    (-> db
-        (update :y inc)
-        (l/update-list 0))))
+    (if (vertical-allowed? db 1)
+      (-> db
+                                  (update :y inc)
+                                  (l/update-list 0)
+          db))))
 
 (rf/reg-event-db
   :movement/up
   (fn [db _]
-    (-> db
-        (update :y dec)
-        (l/update-list 0))))
+    (if (vertical-allowed db -1)
+      (-> db
+                                  (update :y dec)
+                                  (l/update-list 0)
+          db))))
 
 (rf/reg-event-db
   :movement/right

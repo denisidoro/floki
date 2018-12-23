@@ -55,3 +55,12 @@
                 1 %)
         new-list (-> list crop vec (conj item))]
     (assoc db :list new-list)))
+
+(defn vertical-allowed?
+    [{:keys [input list x y]}
+     increase]
+  (let [data (extract2 input list)
+        total-items (-> data (get x) count)
+        res (+ y increase)]
+    (and (pos? res)
+         (< res total-items))))
