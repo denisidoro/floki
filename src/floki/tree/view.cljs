@@ -2,9 +2,17 @@
   (:require [re-frame.core :as rf]
             [reagent.core :as r]))
 
+(defn color
+  [pos descs index]
+  (if (= -1 (:pos/x pos))
+    (case index 0 "green" 1 nil)
+    (case index 0 "blue" 1 "green")))
+
 (defn with-item
-  [{:pos/keys [x]} index items]
-  (conj items x index (= index x)))
+  [pos descs index items]
+  (conj items
+        (->> descs (keep :index) count)
+        (color pos descs index)))
 
 (defn list-native-pane
   []
@@ -34,12 +42,13 @@
          (let [{:keys [descs pos]} (-> (r/current-component) r/props)]
            ;(print ["pos" index pos])
            [:list
-            {:ref        (fn [ref] (reset! ref* ref))
-             :items      (->> descs
-                              get-fn
-                              :keys
-                              (map str))
-             :selectedBg (if (= (:pos/x pos) index) "green" "blue")
+            {:ref   (fn [ref] (reset! ref* ref))
+             :items (->> descs
+                         get-fn
+                         :keys
+                         ;(with-item pos descs index)
+                         (map str))
+             :style {:selected {:bg (color pos descs index)}}
              }
             ]))})))
 
