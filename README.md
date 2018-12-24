@@ -2,15 +2,15 @@
 
 An EDN/JSON browser
 
-<img src="https://user-images.githubusercontent.com/3226564/50401468-fdac3400-0775-11e9-9d4d-cb83b0cd70d4.gif"
+<img src="https://user-images.githubusercontent.com/3226564/50401816-89bf5b00-0778-11e9-9e98-8208e2bebd3e.gif"
      alt="Demo"
      width=520 />
 
 ### Usage
 
-While this code is in its early stages:
+While this repository is in its early stages:
 ```sh
-https://github.com/denisidoro/floki
+git clone https://github.com/denisidoro/floki
 cd floki
 ./scripts/build
 ./scripts/bin "{:a 42}"
