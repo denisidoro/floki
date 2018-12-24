@@ -33,3 +33,18 @@
   (let [data (l.tree/descs input path)
         total-items (-> data (get (+ increase x)) :keys count)]
     (pos? total-items)))
+
+(defn tap
+  [x]
+  (print x)
+  x)
+
+(defn with-previous-pos-y
+  [{:keys [tree/input tree/path] :as db}]
+  (let [descs (l.tree/descs input path)
+        previous-index (->> descs
+                            (keep :index)
+                            tap
+                            drop-last
+                            last)]
+    (assoc db :pos/y previous-index)))

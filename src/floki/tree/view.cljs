@@ -30,7 +30,7 @@
         update (fn [com]
                  (let [selected-index (some-> com r/props :descs get-fn :index)]
                    ;(print ["sel" index selected-index])
-                   (print (some-> com r/props :descs))
+                   ;(print (some-> com r/props :descs))
                    (when selected-index
                      (some-> @ref* (.select selected-index)))))]
     (r/create-class
