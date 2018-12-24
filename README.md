@@ -1,6 +1,6 @@
 # Floki
 
-[![N|Solid](https://cldup.com/dTxpPi9lDf.thumb.png)](https://nodesource.com/products/nsolid)
+![Demo](https://user-images.githubusercontent.com/3226564/50401468-fdac3400-0775-11e9-9d4d-cb83b0cd70d4.gif)
 
 An EDN/JSON browser
 
