@@ -16,6 +16,8 @@ cd floki
 ./scripts/bin "{:a 42}"
 ```
 
+Then, simply use `HJKL` for movement.
+
 ### Roadmap
 
 Please refer to the [issues page](https://github.com/denisidoro/floki/issues).
