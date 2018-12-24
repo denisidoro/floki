@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-lein cljsbuild once
+lein do clean, cljsbuild once

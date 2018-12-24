@@ -14,13 +14,13 @@
                  :hash-paren         :green,
                  :keyword            :cyan,
                  :nil                :yellow,
-                 :none               :black,
+                 :none               :red,
                  :number             :green,
                  :paren              :green,
                  :syntax-quote-paren :red
                  :quote              :red,
                  :string             :yellow,
                  :uneval             :magenta,
-                 :user-fn            :black}
+                 :user-fn            :blue}
      :map       {:comma?    false
                  :force-nl? true}}))
