@@ -23,18 +23,14 @@
 
 (defn as-map2
   [x]
-  (let [started?* (atom false)]
     (walk/prewalk
-      #(let [res (if (and @started?*
+      #(if (and (not (map-entry? %))
                           (or (vector? %)
                               (set? %)
-                              (list? %))
-                          (not (map-entry? %)))
+                              (list? %)))
                    (as-map %)
-                   %)]
-         (reset! started?* true)
-         res)
-      x)))
+                   %)
+      x))
 
 (defn generic-get-in
   [m path]
