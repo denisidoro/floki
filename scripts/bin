@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+input="$(cat)"
+node target/main.js "$input"

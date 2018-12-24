@@ -8,6 +8,7 @@
                                                [cljsjs/react-dom]
                                                [cljsjs/create-react-class]]]
                  [re-frame "0.10.6"]
+                 [denisidoro/quark "0.4.1" :exclusion [[cheshire]]]
                  [zprint "0.4.13"]]
   :plugins [[lein-cljsbuild "1.1.7" :exclusions [[org.clojure/clojure]]]
             [lein-figwheel "0.5.17"]]

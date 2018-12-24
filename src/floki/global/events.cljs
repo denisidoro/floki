@@ -2,7 +2,7 @@
   (:require [re-frame.core :as rf]
             [floki.movement.events]))
 
-(def input
+(def default-input
   {:a0 1
    :a {:b {:c {:d {:e 54
                    :hi "hello"}
@@ -15,8 +15,8 @@
 
 (rf/reg-event-db
   :init
-  (fn [_ _]
-    {:tree/input input
+  (fn [_ [_ input]]
+    {:tree/input (or input default-input)
      :pos/x -1
      :pos/y 0
      :tree/path  []}))
