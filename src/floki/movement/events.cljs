@@ -41,7 +41,7 @@
 
       (l.movement/horizontal-allowed? db -1)
       (-> db
-          (assoc :pos/y 0)
+          l.movement/with-previous-pos-y
           (update :pos/x dec)
           (l.movement/update-list -1))
 
