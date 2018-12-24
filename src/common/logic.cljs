@@ -28,7 +28,8 @@
       #(let [res (if (and @started?*
                           (or (vector? %)
                               (set? %)
-                              (list? %)))
+                              (list? %))
+                          (not (map-entry? %)))
                    (as-map %)
                    %)]
          (reset! started?* true)
