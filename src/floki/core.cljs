@@ -4,10 +4,11 @@
             [re-frame.core :as rf]
             [blessed :as blessed]                           ; or use neo-blessed
             ["react-blessed" :as react-blessed]
-            [floki.keys :as keys]
-            [floki.subs]
-            [floki.events]
-            [floki.view :as view]))
+            [floki.global.keys :as keys]
+            [floki.global.subs]
+            [floki.global.events]
+            [floki.global.view :as view]
+            [floki.debug.view :as v.debug]))
 
 (defonce screen
   (blessed/screen #js {:autoPadding true
@@ -19,25 +20,17 @@
 
 (keys/setup screen)
 
-(defn dispatch-timer-event
-  []
-  (let [now (js/Date.)]
-    (rf/dispatch [:timer now])))
-
-(defonce do-timer
-  (js/setInterval dispatch-timer-event 1000))
-
 (defn load []
   (-> (r/reactify-component view/root)
       (r/create-element #js {})
       (render screen)))
 
 (defn -main []
-  (rf/dispatch-sync [:initialize])
+  (rf/dispatch-sync [:init])
   (load))
 
 (defn log-fn [& args]
-  (swap! view/logger conj (clojure.string/join " " args)))
+  (swap! v.debug/logger conj (clojure.string/join " " args)))
 
 ;; Hack to prevent figwheel, which prints to console.log, overwriting the "render"
 (set! (.-log js/console) log-fn)

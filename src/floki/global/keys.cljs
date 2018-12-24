@@ -1,4 +1,4 @@
-(ns floki.keys
+(ns floki.global.keys
   (:require [re-frame.core :as rf]))
 
 (defn setup
