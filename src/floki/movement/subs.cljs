@@ -4,6 +4,5 @@
 (rf/reg-sub
   :movement/pos
   (fn [db _]
-    (select-keys db
-                 [:pos/x :pos/y])))
+    (select-keys db [:pos/x :pos/y])))
 

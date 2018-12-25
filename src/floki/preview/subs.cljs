@@ -1,6 +1,6 @@
 (ns floki.preview.subs
   (:require [re-frame.core :as rf]
-            [common.logic :as l]))
+            [quark.navigation.core :as nav]))
 
 (rf/reg-sub
   :preview/data
@@ -8,5 +8,5 @@
   :<- [:tree/path]
   (fn [[input path]]
     (if (seq path)
-      (l/generic-get-in input path)
+      (nav/navigate input path)
       input)))
