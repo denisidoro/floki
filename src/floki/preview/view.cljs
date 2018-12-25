@@ -1,6 +1,7 @@
 (ns floki.preview.view
   (:require [re-frame.core :as rf]
-            [common.print :as print]))
+            [common.print :as print]
+            [floki.preview.logic :as l]))
 
 (defn preview
   []
@@ -9,21 +10,17 @@
     :top     0
     :width   50
     :content (-> @(rf/subscribe [:preview/data])
-                 print/cstr)}])
-
-(defn without-first-and-last-chars
-  [s]
-  (subs s 1 (-> s count dec)))
+                 l/preview-content)}])
 
 (defn path-box
   []
   [:text#debug {:bottom 0
                 :left   0
                 :width  "100%"
-                :style  {:border {:fg :yellow}}
+                :style  {:border  {:fg :yellow}}
                 :border {:type :line}
+                :shrink true
                 :label  "Path"}
    [:text {:width   "40%"
            :content (-> @(rf/subscribe [:tree/path])
-                         str
-                        without-first-and-last-chars)}]])
+                        l/path-content)}]])

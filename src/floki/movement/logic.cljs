@@ -1,6 +1,5 @@
 (ns floki.movement.logic
-  (:require [common.logic :as l]
-            [floki.tree.logic :as l.tree]))
+  (:require [floki.tree.logic :as l.tree]))
 
 (defn update-list
     [{:keys [tree/input tree/path pos/x pos/y] :as db}

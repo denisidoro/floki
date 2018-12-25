@@ -13,14 +13,14 @@
             [floki.debug.view :as v.debug]))
 
 (defonce screen
-  (blessed/screen #js {:autoPadding true
-                       :smartCSR    true
-                       :title       "Hello react blessed"}))
+  (doto
+    (blessed/screen #js {:autoPadding true
+                         :smartCSR    true
+                         :title       "Hello react blessed"})
+    keys/setup))
 
 (defonce render
   (react-blessed/createBlessedRenderer blessed))
-
-(keys/setup screen)
 
 (defn convert
   [x]
