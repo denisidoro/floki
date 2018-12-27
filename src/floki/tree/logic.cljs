@@ -28,33 +28,34 @@
         indexes   (map (partial calc-index path) path-seqs)]
     (mapv merge-path-with-index path-seqs indexes)))
 
-(defn fg-color
+(defn bg-color
   [pos index]
   (if (= -1 (:pos/x pos))
-    (case index 0 "green" 1 nil)
-    (case index 0 "blue" 1 "green")))
+    (case index 0 "green" nil)
+    (case index 0 "blue" "green")))
 
 (defn get-fn
   [coll index]
   (try
     (let [x     (->> coll (keep :index) count dec)
-          coll' (->> coll (into [{:keys [:root] :index 0}]) (drop x))]
-      (case index
-        0 (first coll')
-        1 (second coll')))
+          coll' (->> coll (into [{:keys [:root] :index 0}]) (drop x) vec)]
+      (get coll' index))
     (catch js/Error e
       (do (print e)
           {}))))
 
 (defn pane-update
-  [{:keys [descs index]} ref*]
-  (let [selected-index (some-> descs (get-fn index) :index)]
-    (when selected-index
-      (some-> @ref* (.select selected-index)))))
+  [{:keys [selected-index]} ref*]
+  (when selected-index
+    (some-> @ref* (.select selected-index))))
 
 (defn pane-viewmodel
-  [{:keys [descs pos index]}]
-  {:items (->> (get-fn descs index)
-               :keys
-               (map str))
-   :style {:selected {:bg (fg-color pos index)}}})
+  [descs pos index]
+  (let [desc           (get-fn descs index)
+        items          (->> desc :keys (map str))
+        selected-index (:index desc)
+        color          (bg-color pos index)
+        style          {:selected {:bg color}}]
+    {:items          items
+     :selected-index selected-index
+     :style          style}))

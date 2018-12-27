@@ -1,6 +1,7 @@
 (ns floki.tree.subs
   (:require [re-frame.core :as rf]
-            [floki.tree.logic :as l.tree]))
+            [floki.tree.logic :as l.tree]
+            [floki.tree.logic :as l]))
 
 (rf/reg-sub
   :tree/input
@@ -23,3 +24,10 @@
   :<- [:tree/path]
   (fn [[paths path]]
     (l.tree/descs paths path)))
+
+(rf/reg-sub
+  :tree/viewmodel
+  :<- [:tree/descs]
+  :<- [:movement/pos]
+  (fn [[descs pos] [_ index]]
+    (l/pane-viewmodel descs pos index)))

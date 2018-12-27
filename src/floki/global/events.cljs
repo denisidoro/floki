@@ -8,10 +8,16 @@
 
 (rf/reg-event-db
   :init
-  (fn [_ [_ input]]
-    (let [input' (or input default-input)]
-      {:tree/input input'
-       :tree/paths (nav/paths input)
-       :pos/x      -1
-       :pos/y      0
-       :tree/path  []})))
+  (fn [_ _]
+    {:tree/input {}
+     :tree/paths []
+     :pos/x      -1
+     :pos/y      0
+     :tree/path  []}))
+
+(rf/reg-event-db
+  :input/set
+  (fn [db [_ input]]
+    (assoc db
+      :tree/input input
+      :tree/paths (nav/paths input))))
