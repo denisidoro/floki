@@ -5,22 +5,15 @@
             [quark.conversion.data :as conversion]
             [re-frame.core :as rf]
             [blessed :as blessed]                           ; or use neo-blessed
+            [fs :as fs]
+            [tty :as tty]
+            [common.stdin :as stdin]
             ["react-blessed" :as react-blessed]
             [floki.global.keys :as keys]
             [floki.global.subs]
             [floki.global.events]
             [floki.global.view :as view]
             [floki.debug.view :as v.debug]))
-
-(defonce screen
-  (doto
-    (blessed/screen #js {:autoPadding true
-                         :smartCSR    true
-                         :title       "Hello react blessed"})
-    keys/setup))
-
-(defonce render
-  (react-blessed/createBlessedRenderer blessed))
 
 (defn convert
   [x]
@@ -29,7 +22,27 @@
     (catch js/Error _
       (conversion/json->edn x))))
 
-(defn get-input
+(stdin/handler #(rf/dispatch [:input/set (convert %)]))
+
+(defonce tty-fd
+  (fs/openSync "/dev/tty" "r+"))
+
+(defonce program
+  (blessed/program #js {:input  (tty/ReadStream tty-fd)
+                        :output (tty/WriteStream tty-fd)}))
+
+(defonce screen
+  (doto
+    (blessed/screen #js {:program     program
+                         :autoPadding true
+                         :smartCSR    true
+                         :title       "Hello react blessed"})
+    keys/setup))
+
+(defonce render
+  (react-blessed/createBlessedRenderer blessed))
+
+#_(defn get-input
   []
   (-> (.-argv js/process)
       last
@@ -41,7 +54,7 @@
       (render screen)))
 
 (defn -main []
-  (rf/dispatch-sync [:init (get-input)])
+  (rf/dispatch-sync [:init])
   (load))
 
 (defn log-fn [& args]
