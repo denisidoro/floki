@@ -1,6 +1,5 @@
 (ns floki.preview.view
   (:require [re-frame.core :as rf]
-            [common.print :as print]
             [floki.preview.logic :as l]))
 
 (defn preview
@@ -12,12 +11,21 @@
     :content (-> @(rf/subscribe [:preview/data])
                  l/preview-content)}])
 
+(defn preview-box
+  []
+  [:box {:bottom 3
+         :right  0
+         :width  "68%"
+         :label  "Preview"
+         :border {:type :line}}
+   [preview]])
+
 (defn path-box
   []
   [:text#debug {:bottom 0
                 :left   0
                 :width  "100%"
-                :style  {:border  {:fg :yellow}}
+                :style  {:border {:fg :yellow}}
                 :border {:type :line}
                 :shrink true
                 :label  "Path"}

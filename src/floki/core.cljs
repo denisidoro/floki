@@ -15,12 +15,18 @@
             [floki.global.view :as view]
             [floki.debug.view :as v.debug]))
 
+(def error-input
+  {:error "Unable to parse JSON/EDN"})
+
 (defn convert
   [x]
   (try
     (conversion/edn-str->edn x)
     (catch js/Error _
-      (conversion/json->edn x))))
+      (try
+        (or (conversion/json->edn x) error-input)
+        (catch js/Error _
+          error-input)))))
 
 (stdin/handler #(rf/dispatch [:input/set (convert %)]))
 
@@ -43,10 +49,10 @@
   (react-blessed/createBlessedRenderer blessed))
 
 #_(defn get-input
-  []
-  (-> (.-argv js/process)
-      last
-      convert))
+    []
+    (-> (.-argv js/process)
+        last
+        convert))
 
 (defn load []
   (-> (r/reactify-component view/root)
@@ -63,6 +69,7 @@
 ;; Hack to prevent figwheel, which prints to console.log, overwriting the "render"
 (set! (.-log js/console) log-fn)
 
-(re-frame.loggers/set-loggers! {:log log-fn, :warn log-fn})
+(re-frame.loggers/set-loggers! {:log  log-fn
+                                :warn log-fn})
 
 (set! *main-cli-fn* -main)

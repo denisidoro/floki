@@ -1,8 +1,8 @@
-(ns common.stdin)
+(ns common.stdin
+(:require [process :as process]))
 
-(js/require "process")
 (def stdinput (atom ""))
-(def stdin (.-stdin js/process))
+(def stdin (.-stdin process))
 
 (defn handler
   [callback]
