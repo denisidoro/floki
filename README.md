@@ -13,7 +13,7 @@ While this repository is in its early stages:
 git clone https://github.com/denisidoro/floki
 cd floki
 ./scripts/build
-echo '{:a 42}' | ./scripts/bin
+echo '{:a 42}' | ./scripts/run
 ```
 
 Then, simply use `HJKL` or the arrow keys for movement.

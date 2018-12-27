@@ -16,3 +16,4 @@ figwheel_server.log
 package-lock.json
 /demos
 yarn.lock
+/bin

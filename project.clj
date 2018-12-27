@@ -1,4 +1,4 @@
-(defproject floki "0.1.0-SNAPSHOT"
+(defproject floki "0.2.0-SNAPSHOT"
   :description "FIXME: write this!"
   :url "http://example.com/FIXME"
   :min-lein-version "2.7.1"
