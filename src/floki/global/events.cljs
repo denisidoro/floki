@@ -1,22 +1,17 @@
 (ns floki.global.events
   (:require [re-frame.core :as rf]
+            [quark.navigation.core :as nav]
             [floki.movement.events]))
 
 (def default-input
-  {:a0 1
-   :a {:b {:c {:d {:e 54
-                   :hi "hello"}
-               :phillip 44}
-           :mary 42}
-       :john 44}
-   :x [{:foo 0} {:bar 1}]
-   :y #{{:foo 0} {:bar 1}}
-   :z 45})
+  {:error "Unable to parse JSON/EDN"})
 
 (rf/reg-event-db
   :init
   (fn [_ [_ input]]
-    {:tree/input (or input default-input)
-     :pos/x -1
-     :pos/y 0
-     :tree/path  []}))
+    (let [input' (or input default-input)]
+      {:tree/input input'
+       :tree/paths (nav/paths input)
+       :pos/x      -1
+       :pos/y      0
+       :tree/path  []})))

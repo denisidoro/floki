@@ -2,9 +2,9 @@
   (:require [floki.tree.logic :as l.tree]))
 
 (defn update-list
-    [{:keys [tree/input tree/path pos/x pos/y] :as db}
+    [{:keys [tree/paths tree/path pos/x pos/y] :as db}
      element-increase]
-  (let [data (l.tree/descs input path)
+  (let [data (l.tree/descs paths path)
         get-fn #(get % x)
         ks (-> data get-fn :keys vec)
         item (get ks y)
@@ -18,18 +18,18 @@
       (update db :pos/x dec element-increase))))
 
 (defn vertical-allowed?
-    [{:keys [tree/input tree/path pos/x pos/y]}
+    [{:keys [tree/paths tree/path pos/x pos/y]}
      increase]
-  (let [data (l.tree/descs input path)
+  (let [data (l.tree/descs paths path)
         total-items (-> data (get x) :keys count)
         res (+ y increase)]
     (and (not (neg? res))
          (< res total-items))))
 
 (defn horizontal-allowed?
-  [{:keys [tree/input tree/path pos/x]}
+  [{:keys [tree/paths tree/path pos/x]}
    increase]
-  (let [data (l.tree/descs input path)
+  (let [data (l.tree/descs paths path)
         total-items (-> data (get (+ increase x)) :keys count)]
     (pos? total-items)))
 
@@ -39,8 +39,8 @@
   x)
 
 (defn with-previous-pos-y
-  [{:keys [tree/input tree/path] :as db}]
-  (let [descs (l.tree/descs input path)
+  [{:keys [tree/paths tree/path] :as db}]
+  (let [descs (l.tree/descs paths path)
         previous-index (->> descs
                             (keep :index)
                             tap

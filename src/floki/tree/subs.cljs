@@ -13,8 +13,13 @@
     (:tree/path db)))
 
 (rf/reg-sub
+  :tree/paths
+  (fn [db _]
+    (:tree/paths db)))
+
+(rf/reg-sub
   :tree/descs
-  :<- [:tree/input]
+  :<- [:tree/paths]
   :<- [:tree/path]
-  (fn [[input path]]
-    (l.tree/descs input path)))
+  (fn [[paths path]]
+    (l.tree/descs paths path)))
