@@ -3,9 +3,6 @@
             [quark.navigation.core :as nav]
             [floki.movement.events]))
 
-(def default-input
-  {:error "Unable to parse JSON/EDN"})
-
 (rf/reg-event-db
   :init
   (fn [_ _]

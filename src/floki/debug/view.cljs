@@ -3,7 +3,7 @@
             [reagent.core :as r]))
 
 (defonce logger
-         (r/atom []))
+  (r/atom []))
 
 (defn log-box [n]
   [:text#log

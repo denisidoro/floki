@@ -1,6 +1,5 @@
 (ns floki.preview.logic
-  (:require [re-frame.core :as rf]
-            [common.print :as print]))
+  (:require [common.print :as print]))
 
 (def preview-content
   print/cstr)

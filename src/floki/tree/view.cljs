@@ -23,3 +23,23 @@
 (defn list-pane
   [index]
   [list-native-pane @(rf/subscribe [:tree/viewmodel index])])
+
+(defn left-pane
+  []
+  [:box {:bottom 3
+         :left   0
+         :width  "20%"
+         :border {:type  :line
+                  :right false
+                  :fg    "blue"}}
+   [list-pane 0]])
+
+(defn right-pane
+  []
+  [:box {:bottom 3
+         :left   "15%"
+         :width  "20%"
+         :border {:type :line
+                  :left false
+                  :fg   "blue"}}
+   [list-pane 1]])
