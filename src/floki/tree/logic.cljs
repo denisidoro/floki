@@ -1,34 +1,34 @@
 (ns floki.tree.logic
-  (:require [quark.lang.collection :as coll]
-            [quark.navigation.core :as nav]
-            [reagent.core :as r]))
+  (:require [quark.lang.collection :as coll]))
 
-(defn fill
-  [acc m]
-  (if (map? m)
-    (into acc [{:keys (-> m keys vec)}])
-    acc))
+(defn ^:private calc-index
+  [path path-seq]
+  (let [n (-> path-seq first count)
+        p (take n path)]
+    (coll/first-index #(= % p) path-seq)))
+
+(defn ^:private calc-path-seqs
+  [paths path]
+  (loop [n   0
+         acc []]
+    (if (> n (count path))
+      acc
+      (let [p  (take n path)
+            ps (filter #(and (-> % count dec (= n))
+                             (->> % (take n) (= p))) paths)]
+        (recur (inc n) (conj acc ps))))))
+
+(defn merge-path-with-index
+  [path-seq index]
+  (coll/assoc-if {:keys (mapv last path-seq)} :index index))
 
 (defn descs
-  [input path]
-  (loop [m   (nav/as-map-recursive input)
-         [item & items] path
-         acc []]
-    (cond
-      (not (map? m))
-      acc
+  [paths path]
+  (let [path-seqs (calc-path-seqs paths path)
+        indexes   (map (partial calc-index path) path-seqs)]
+    (mapv merge-path-with-index path-seqs indexes)))
 
-      (not item)
-      (fill acc m)
-
-      :else
-      (let [ks     (-> m keys vec)
-            index  (coll/first-index #(= item %) ks)
-            next-m (get m item)
-            res    {:keys ks :index index}]
-        (recur next-m items (conj acc res))))))
-
-(defn color
+(defn fg-color
   [pos index]
   (if (= -1 (:pos/x pos))
     (case index 0 "green" 1 nil)
@@ -57,4 +57,4 @@
   {:items (->> (get-fn descs index)
                :keys
                (map str))
-   :style {:selected {:bg (color pos index)}}})
+   :style {:selected {:bg (fg-color pos index)}}})

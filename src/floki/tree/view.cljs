@@ -12,7 +12,6 @@
 (defn list-native-pane
   []
   (let [ref*   (atom nil)
-        index  (-> (r/current-component) r/props :index)
         update #(l/pane-update (some-> % r/props) ref*)]
     (r/create-class
       {:component-did-update

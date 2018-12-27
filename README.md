@@ -16,7 +16,7 @@ cd floki
 ./scripts/bin "{:a 42}"
 ```
 
-Then, simply use `HJKL` for movement.
+Then, simply use `HJKL` or the arrow keys for movement.
 
 ### Roadmap
 
