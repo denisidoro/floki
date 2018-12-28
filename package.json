@@ -11,7 +11,7 @@
   "scripts": {
     "build": "./scripts/build",
     "move": "./scripts/move",
-    "bin": "./scripts/bin"
+    "bin": "./scripts/run"
   },
   "main": "bin/main.js",
   "preferGlobal": true,

@@ -18,7 +18,9 @@ npm install -g floki
 echo '{"a": 42}' | floki
 ```
 
-Then, simply use `HJKL` or the arrow keys for movement.
+- directions: `h`, `j`, `k`, `l` or the arrow keys
+- first/last item: `g`/`G`, respectively
+- quit: `q`
 
 ### Roadmap
 
