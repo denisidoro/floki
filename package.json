@@ -1,7 +1,7 @@
 {
   "name": "floki",
   "description": "An EDN/JSON browser",
-  "version": "0.2.0",
+  "version": "0.3.1",
   "author": "Denis Isidoro",
   "repository": "https://github.com/denisidoro/floki.git",
   "license": "MIT",
@@ -11,7 +11,8 @@
   "scripts": {
     "build": "./scripts/build",
     "move": "./scripts/move",
-    "bin": "./scripts/bin"
+    "bin": "./scripts/run",
+    "all": "./scripts/all"
   },
   "main": "bin/main.js",
   "preferGlobal": true,
@@ -33,8 +34,8 @@
     "react-dom": "^16.6.3"
   },
   "devDependencies": {
-    "ws": "^6.1.2",
-    "@cljs-oss/module-deps": "^1.1.1"
+    "@cljs-oss/module-deps": "^1.1.1",
+    "ws": "^6.1.2"
   },
   "files": [
     "bin"

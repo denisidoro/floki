@@ -1,5 +1,6 @@
 (ns floki.tree.logic
-  (:require [quark.lang.collection :as coll]))
+  (:require [quark.lang.collection :as coll]
+            [clojure.string :as str]))
 
 (defn ^:private calc-index
   [path path-seq]
@@ -49,10 +50,16 @@
   (when selected-index
     (some-> @ref* (.select selected-index))))
 
+(defn ^:private without-colon
+  [x]
+  (-> x
+      str
+      (str/replace ":" "")))
+
 (defn pane-viewmodel
   [descs pos index]
   (let [desc           (get-fn descs index)
-        items          (->> desc :keys (map str))
+        items          (->> desc :keys (map without-colon))
         selected-index (:index desc)
         color          (bg-color pos index)
         style          {:selected {:bg color}}]

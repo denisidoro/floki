@@ -31,6 +31,24 @@
       db)))
 
 (rf/reg-event-db
+  :movement/first
+  (fn [db _]
+    (if (l.movement/jump-allowed? db)
+      (-> db
+          (assoc :pos/y 0)
+          (l.movement/update-list 0))
+      db)))
+
+(rf/reg-event-db
+  :movement/last
+  (fn [db _]
+    (if (l.movement/jump-allowed? db)
+      (-> db
+          (assoc :pos/y (l.movement/last-index db))
+          (l.movement/update-list 0))
+      db)))
+
+(rf/reg-event-db
   :movement/left
   (fn [db _]
     (cond

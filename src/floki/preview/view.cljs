@@ -15,7 +15,7 @@
   []
   [:box {:bottom 3
          :right  0
-         :width  "68%"
+         :width  "79%"
          :label  "Preview"
          :border {:type :line}}
    [preview]])
