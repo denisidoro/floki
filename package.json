@@ -10,7 +10,8 @@
   },
   "scripts": {
     "build": "./scripts/build",
-    "bin": "./scripts/run"
+    "move": "./scripts/move",
+    "bin": "./scripts/bin"
   },
   "main": "bin/main.js",
   "preferGlobal": true,
