@@ -1,6 +1,6 @@
 (defproject floki "0.2.0-SNAPSHOT"
-  :description "FIXME: write this!"
-  :url "http://example.com/FIXME"
+  :description "An EDN/JSON browser for the terminal"
+  :url "https://github.com/denisidoro/floki"
   :min-lein-version "2.7.1"
   :dependencies [[org.clojure/clojure "1.9.0"]
                  [org.clojure/clojurescript "1.10.439"]
@@ -25,7 +25,6 @@
                                        :optimizations        :none
                                        :source-map-timestamp true
                                        :npm-deps             {:blessed            "0.1.81"
-                                                              :neo-blessed        "0.2.0" ; Optional
                                                               :react-blessed      "0.5.0"
                                                               :react              "16.6.3"
                                                               :react-dom          "16.6.3"
