@@ -2,5 +2,6 @@
 
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." >/dev/null 2>&1 && pwd)"
 
-input="/dev/stdin"
-node "$DIR/target/main.js" < "$input"
+"$DIR/scripts/build"
+"$DIR/scripts/move"
+npm publish
