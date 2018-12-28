@@ -1,19 +1,21 @@
 # Floki
 
-An EDN/JSON browser
+An EDN/JSON browser for the terminal
 
 <img src="https://user-images.githubusercontent.com/3226564/50401816-89bf5b00-0778-11e9-9e98-8208e2bebd3e.gif"
      alt="Demo"
      width=520 />
 
+### Installation
+
+```sh
+npm install -g floki
+```
+
 ### Usage
 
-While this repository is in its early stages:
 ```sh
-git clone https://github.com/denisidoro/floki
-cd floki
-./scripts/build
-echo '{:a 42}' | ./scripts/bin
+echo '{"a": 42}' | floki
 ```
 
 Then, simply use `HJKL` or the arrow keys for movement.
