@@ -1,4 +1,7 @@
-# Floki
+# Floki 
+
+[![CircleCI](https://circleci.com/gh/denisidoro/floki.svg?style=svg)](https://circleci.com/gh/denisidoro/floki) 
+[![npm version](https://badge.fury.io/js/floki.svg)](https://badge.fury.io/js/floki)
 
 An EDN/JSON browser for the terminal
 
