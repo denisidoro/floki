@@ -9,6 +9,7 @@
   (.setEncoding stdin "utf8")
   (.on stdin "data"
        (fn [data]
+         (print "DATA!!!!!!!")
          (if (= (str data) "q")
            (process/exit))
          (swap! stdinput #(str % data))))

@@ -1,12 +1,13 @@
 (ns floki.tree.logic
-  (:require [quark.lang.collection :as coll]
+  (:require [quark.collection.seq :as coll.seq]
+            [quark.collection.map :as coll.map]
             [clojure.string :as str]))
 
 (defn ^:private calc-index
   [path path-seq]
   (let [n (-> path-seq first count)
         p (take n path)]
-    (coll/first-index #(= % p) path-seq)))
+    (coll.seq/first-index #(= % p) path-seq)))
 
 (defn ^:private calc-path-seqs
   [paths path]
@@ -21,7 +22,7 @@
 
 (defn merge-path-with-index
   [path-seq index]
-  (coll/assoc-if {:keys (mapv last path-seq)} :index index))
+  (coll.map/assoc-if {:keys (mapv last path-seq)} :index index))
 
 (defn descs
   [paths path]

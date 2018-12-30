@@ -1,14 +1,14 @@
-(defproject floki "0.3.1-SNAPSHOT"
+(defproject floki "0.3.2-SNAPSHOT"
   :description "An EDN/JSON browser for the terminal"
   :url "https://github.com/denisidoro/floki"
   :min-lein-version "2.7.1"
-  :dependencies [[org.clojure/clojure "1.9.0"]
+  :dependencies [[org.clojure/clojure "1.10.0"]
                  [org.clojure/clojurescript "1.10.439"]
                  [reagent "0.8.1" :exclusions [[cljsjs/react]
                                                [cljsjs/react-dom]
                                                [cljsjs/create-react-class]]]
                  [re-frame "0.10.6"]
-                 [denisidoro/quark "0.5.0" :exclusion [[cheshire]]]
+                 [denisidoro/quark "0.6.0" :exclusion [[cheshire]]]
                  [zprint "0.4.13"]]
   :plugins [[lein-cljsbuild "1.1.7" :exclusions [[org.clojure/clojure]]]
             [lein-figwheel "0.5.17"]]
