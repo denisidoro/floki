@@ -4,7 +4,7 @@
             [reagent.core :as r]
             [quark.conversion.data :as conversion]
             [re-frame.core :as rf]
-            [blessed :as blessed]                           ; or use neo-blessed
+            [blessed :as blessed]
             [fs :as fs]
             [tty :as tty]
             [common.stdin :as stdin]
@@ -15,20 +15,26 @@
             [floki.global.view :as view]
             [floki.debug.view :as v.debug]))
 
-(def error-input
-  {:error "Unable to parse JSON/EDN"})
+(defn log-fn [& args]
+  (swap! v.debug/logger conj (clojure.string/join " " args)))
+
+(defn error-input
+  [& exceptions]
+  {:error "Unable to parse JSON/EDN"
+   :exceptions exceptions})
 
 (defn convert
   [x]
   (try
     (conversion/edn-str->edn x)
-    (catch js/Error _
+    (catch js/Error e1
       (try
-        (or (conversion/json->edn x) error-input)
-        (catch js/Error _
-          error-input)))))
+        (or (conversion/json->edn x) (error-input e1))
+        (catch js/Error e2
+          (error-input e1 e2))))))
 
-(stdin/handler #(rf/dispatch [:input/set (convert %)]))
+(stdin/handler #(do (log-fn %)
+                    (rf/dispatch [:input/set (convert %)])))
 
 (defonce tty-fd
   (fs/openSync "/dev/tty" "r+"))
@@ -63,10 +69,6 @@
   (rf/dispatch-sync [:init])
   (load))
 
-(defn log-fn [& args]
-  (swap! v.debug/logger conj (clojure.string/join " " args)))
-
-;; Hack to prevent figwheel, which prints to console.log, overwriting the "render"
 (set! (.-log js/console) log-fn)
 
 (re-frame.loggers/set-loggers! {:log  log-fn

@@ -13,7 +13,7 @@
     :hash-paren         :green
     :keyword            :cyan
     :nil                :yellow
-    :none               :red
+    :none               :yellow
     :number             :green
     :paren              :red
     :syntax-quote-paren :red
