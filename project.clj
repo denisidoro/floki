@@ -2,6 +2,9 @@
   :description "An EDN/JSON browser for the terminal"
   :url "https://github.com/denisidoro/floki"
   :min-lein-version "2.7.1"
+  :license {:name "The Apache License, Version 2.0"
+            :url "http://www.apache.org/licenses/LICENSE-2.0"
+            :distribution :repo}
   :dependencies [[org.clojure/clojure "1.10.0"]
                  [org.clojure/clojurescript "1.10.439"]
                  [reagent "0.8.1" :exclusions [[cljsjs/react]
