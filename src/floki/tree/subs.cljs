@@ -9,6 +9,11 @@
     (:tree/input db)))
 
 (rf/reg-sub
+  :tree/format
+  (fn [db _]
+    (:tree/format db)))
+
+(rf/reg-sub
   :tree/path
   (fn [db _]
     (:tree/path db)))

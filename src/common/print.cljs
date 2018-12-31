@@ -42,8 +42,12 @@
   [text from to]
   (str/replace text (str \u001b \[ from) (str \u001b \[ to)))
 
+(defn replace-black-to-white
+  [text]
+  (replace-color text 30 97))
+
 (defn cstr
   [x]
   (-> x
       (zprint/czprint-str default-options)
-      (replace-color 30 97)))
+      replace-black-to-white))

@@ -8,8 +8,7 @@
    {:left    0
     :top     0
     :width   50
-    :content (-> @(rf/subscribe [:preview/data])
-                 l/preview-content)}])
+    :content @(rf/subscribe [:preview/preview-viewmodel])}])
 
 (defn preview-box
   []
@@ -30,5 +29,4 @@
                 :shrink true
                 :label  "Path"}
    [:text {:width   "40%"
-           :content (-> @(rf/subscribe [:tree/path])
-                        l/path-content)}]])
+           :content @(rf/subscribe [:preview/path-viewmodel]) }]])

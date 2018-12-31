@@ -14,7 +14,8 @@
 
 (rf/reg-event-db
   :input/set
-  (fn [db [_ input]]
+  (fn [db [_ {:keys [format data]}]]
     (assoc db
-      :tree/input input
-      :tree/paths (nav/paths input))))
+      :tree/input data
+      :tree/format format
+      :tree/paths (nav/paths data))))
