@@ -4,7 +4,7 @@
   "version": "0.3.4",
   "author": "Denis Isidoro",
   "repository": "https://github.com/denisidoro/floki.git",
-  "license": "MIT",
+  "license": "Apacje 2.0",
   "engines": {
     "node": ">=0.9.0"
   },
