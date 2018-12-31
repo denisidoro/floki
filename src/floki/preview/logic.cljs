@@ -42,8 +42,8 @@
     (if (= format :json)
       (-> data
           conversion/edn->json
-          (JSON/parse)
-          (JSON/colorStringify)
+          (js/JSON.parse)
+          (js/JSON.colorStringify)
           (str/replace "[35m" "[33m")
           (str/replace "[39m" "[36m")
           (str/replace "[90m" "[32m"))

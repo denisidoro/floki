@@ -1,7 +1,7 @@
 {
   "name": "floki",
   "description": "An EDN/JSON browser",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "author": "Denis Isidoro",
   "repository": "https://github.com/denisidoro/floki.git",
   "license": "Apache 2.0",
