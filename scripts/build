@@ -13,4 +13,4 @@ mv package.bkp.json package.json
 
 popd &> /dev/null
 
-"$DIR/move"
+"$DIR/scripts/move"
