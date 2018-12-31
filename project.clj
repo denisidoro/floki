@@ -32,6 +32,7 @@
                                                               :react              "16.6.3"
                                                               :react-dom          "16.6.3"
                                                               :create-react-class "15.6.3"
+                                                              :clipboardy         "1.2.3"
                                                               :node-json-color-stringify "1.1.0"
                                                               :ws                 "6.1.2"}
                                        :install-deps         true}}
@@ -46,6 +47,7 @@
                                                        :react              "16.6.3"
                                                        :react-dom          "16.6.3"
                                                        :node-json-color-stringify "1.1.0"
+                                                       :clipboardy         "1.2.3"
                                                        :create-react-class "15.6.3"}
                                        :install-deps  true}}]}
   :profiles {:dev {:dependencies [[figwheel-sidecar "0.5.13"]
