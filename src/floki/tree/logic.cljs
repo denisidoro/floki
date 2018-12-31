@@ -26,8 +26,8 @@
 
 (defn descs
   [paths path]
-  (let [path-seqs (calc-path-seqs paths path)
-        indexes   (map (partial calc-index path) path-seqs)]
+  (let [path-seqs (vec (calc-path-seqs paths path))
+        indexes   (mapv (partial calc-index path) path-seqs)]
     (mapv merge-path-with-index path-seqs indexes)))
 
 (defn bg-color
@@ -64,7 +64,7 @@
 (defn pane-viewmodel
   [descs pos index]
   (let [desc           (get-fn descs index)
-        items          (->> desc :keys (map as-item))
+        items          (->> desc :keys (mapv as-item))
         selected-index (:index desc)
         color          (bg-color pos index)
         style          {:selected {:bg color}}]

@@ -24,6 +24,11 @@
    :data  {:error      "Unable to parse JSON/EDN"
            :exceptions exceptions}})
 
+(defn json->edn
+  [json]
+  (when-not (= json "undefined")
+    (js->clj (.parse js/JSON json))))
+
 (defn convert
   [x]
   (let [res (try
@@ -32,9 +37,13 @@
               (catch js/Error e1
                 (try
                   {:format :json
-                   :data (conversion/json->edn x)}
+                   :data (json->edn x)}
                   (catch js/Error e2
-                    (error-input e1 e2)))))]
+                (try
+                  {:format :json
+                   :data   (json->edn (str x "}"))}
+                  (catch js/Error e3
+                    (error-input e1 e2 e3 x)))) )))]
     (if (seq res)
       res
       (error-input "Empty document") )))

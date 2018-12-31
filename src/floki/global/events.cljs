@@ -19,4 +19,4 @@
     (assoc db
       :tree/input data
       :tree/format format
-      :tree/paths (nav/paths data))))
+      :tree/paths (sort (nav/paths data)))))
