@@ -32,9 +32,9 @@
                   (conversion/json->edn x)
                   (catch js/Error e2
                     (error-input e1 e2)))))]
-    (if false
-      (error-input "Empty document")
-      res)))
+    (if (seq res)
+      res
+      (error-input "Empty document") )))
 
 
 (defn get-filename
