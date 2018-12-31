@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." >/dev/null 2>&1 && pwd)"
+
+bump () {
+
+    local readonly file="$1"
+    local readonly search="$2"
+    local readonly replace="$3"
+
+    sed -i.tmp -E "s/${search}/${replace}/g" "${DIR}/${file}"
+    rm "${DIR}/${file}.tmp"
+
+}
+
+version="$1"
+
+bump package.json '("version":[[:space:]]*").+(")' "\1${version}\2"
+bump project.clj '(\(defproject.*?\")[0-9\.]+(.*)' "\1${version}\2"

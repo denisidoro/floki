@@ -48,7 +48,7 @@
     (blessed/screen #js {:program     program
                          :autoPadding true
                          :smartCSR    true
-                         :title       "Hello react blessed"})
+                         :title       "Floki"})
     keys/setup))
 
 (defonce render

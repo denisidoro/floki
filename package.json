@@ -1,18 +1,16 @@
 {
   "name": "floki",
   "description": "An EDN/JSON browser",
-  "version": "0.3.2",
+  "version": "0.3.4",
   "author": "Denis Isidoro",
   "repository": "https://github.com/denisidoro/floki.git",
-  "license": "MIT",
+  "license": "Apacje 2.0",
   "engines": {
     "node": ">=0.9.0"
   },
   "scripts": {
     "build": "./scripts/build",
-    "move": "./scripts/move",
-    "bin": "./scripts/run",
-    "all": "./scripts/all"
+    "bump": "./scripts/bump"
   },
   "main": "bin/main.js",
   "preferGlobal": true,

@@ -12,3 +12,5 @@ rm package.json
 mv package.bkp.json package.json
 
 popd &> /dev/null
+
+"$DIR/move"
