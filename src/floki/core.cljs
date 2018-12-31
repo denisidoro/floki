@@ -25,16 +25,38 @@
 
 (defn convert
   [x]
-  (try
-    (conversion/edn-str->edn x)
-    (catch js/Error e1
-      (try
-        (or (conversion/json->edn x) (error-input e1))
-        (catch js/Error e2
-          (error-input e1 e2))))))
+  (let [res (try
+              (conversion/edn-str->edn x)
+              (catch js/Error e1
+                (try
+                  (conversion/json->edn x)
+                  (catch js/Error e2
+                    (error-input e1 e2)))))]
+    (if (seq res)
+      res
+      (error-input "Empty document") )))
 
-(stdin/handler #(do (log-fn %)
-                    (rf/dispatch [:input/set (convert %)])))
+
+(defn get-filename
+  []
+  (->> (.-argv js/process)
+       (drop 2)
+      last))
+
+(defn read-file-handler
+  [err buf]
+  (rf/dispatch [:input/set (-> buf str convert)]))
+
+(defn stdin-handler
+  [buf]
+  (rf/dispatch [:input/set (convert buf)]))
+
+(defonce filename (get-filename))
+
+(defonce callback
+         (if filename
+           (fs/readFile filename read-file-handler)
+           (stdin/handler stdin-handler)))
 
 (defonce tty-fd
   (fs/openSync "/dev/tty" "r+"))
@@ -54,11 +76,6 @@
 (defonce render
   (react-blessed/createBlessedRenderer blessed))
 
-#_(defn get-input
-    []
-    (-> (.-argv js/process)
-        last
-        convert))
 
 (defn load []
   (-> (r/reactify-component view/root)
@@ -73,5 +90,4 @@
 
 (re-frame.loggers/set-loggers! {:log  log-fn
                                 :warn log-fn})
-
 (set! *main-cli-fn* -main)
