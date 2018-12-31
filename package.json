@@ -1,6 +1,6 @@
 {
   "name": "floki",
-  "description": "An EDN/JSON browser",
+  "description": "A JSON/EDN browser for the terminal",
   "version": "0.6.2",
   "author": "Denis Isidoro",
   "repository": "https://github.com/denisidoro/floki.git",

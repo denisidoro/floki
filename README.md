@@ -3,7 +3,7 @@
 [![CircleCI](https://circleci.com/gh/denisidoro/floki.svg?style=svg)](https://circleci.com/gh/denisidoro/floki) 
 [![npm version](https://badge.fury.io/js/floki.svg)](https://badge.fury.io/js/floki)
 
-An EDN/JSON browser for the terminal
+A JSON/EDN browser for the terminal
 
 <img src="https://user-images.githubusercontent.com/3226564/50562060-d2868f00-0cf7-11e9-928d-f7e4d0a08cb1.gif"
      alt="Demo"
