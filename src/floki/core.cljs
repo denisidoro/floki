@@ -20,16 +20,19 @@
 
 (defn error-input
   [& exceptions]
-  {:error "Unable to parse JSON/EDN"
-   :exceptions exceptions})
+  {:format :unknown
+   :data  {:error      "Unable to parse JSON/EDN"
+           :exceptions exceptions}})
 
 (defn convert
   [x]
   (let [res (try
-              (conversion/edn-str->edn x)
+              {:format :edn
+               :data (conversion/edn-str->edn x)}
               (catch js/Error e1
                 (try
-                  (conversion/json->edn x)
+                  {:format :json
+                   :data (conversion/json->edn x)}
                   (catch js/Error e2
                     (error-input e1 e2)))))]
     (if (seq res)

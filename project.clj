@@ -1,4 +1,4 @@
-(defproject floki "0.4.0-SNAPSHOT"
+(defproject floki "0.5.0-SNAPSHOT"
   :description "An EDN/JSON browser for the terminal"
   :url "https://github.com/denisidoro/floki"
   :min-lein-version "2.7.1"
@@ -32,6 +32,7 @@
                                                               :react              "16.6.3"
                                                               :react-dom          "16.6.3"
                                                               :create-react-class "15.6.3"
+                                                              :node-json-color-stringify "1.1.0"
                                                               :ws                 "6.1.2"}
                                        :install-deps         true}}
                        {:id           "prod"
@@ -44,6 +45,7 @@
                                                        :react-blessed      "0.5.0"
                                                        :react              "16.6.3"
                                                        :react-dom          "16.6.3"
+                                                       :node-json-color-stringify "1.1.0"
                                                        :create-react-class "15.6.3"}
                                        :install-deps  true}}]}
   :profiles {:dev {:dependencies [[figwheel-sidecar "0.5.13"]

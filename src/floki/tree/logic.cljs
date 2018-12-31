@@ -57,10 +57,14 @@
       str
       (str/replace ":" "")))
 
+(defn as-item
+  [x]
+  (without-colon x))
+
 (defn pane-viewmodel
   [descs pos index]
   (let [desc           (get-fn descs index)
-        items          (->> desc :keys (map without-colon))
+        items          (->> desc :keys (map as-item))
         selected-index (:index desc)
         color          (bg-color pos index)
         style          {:selected {:bg color}}]
