@@ -8,7 +8,8 @@
    ["h" "left" "C-a"]   #(rf/dispatch [:movement/left])
    ["j" "down" "C-n"]   #(rf/dispatch [:movement/down])
    ["k" "up" "C-p"]     #(rf/dispatch [:movement/up])
-   ["l" "right" "C-e"]  #(rf/dispatch [:movement/right])})
+   ["l" "right" "C-e"]  #(rf/dispatch [:movement/right])
+   ["y"]                #(rf/dispatch [:preview/copy-path])})
 
 (defn setup
   [screen]

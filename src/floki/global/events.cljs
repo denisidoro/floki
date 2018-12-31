@@ -1,6 +1,7 @@
 (ns floki.global.events
   (:require [re-frame.core :as rf]
             [quark.navigation.core :as nav]
+            [floki.preview.events]
             [floki.movement.events]))
 
 (rf/reg-event-db
