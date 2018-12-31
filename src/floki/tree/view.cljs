@@ -28,7 +28,7 @@
   []
   [:box {:bottom 3
          :left   0
-         :width  "10%"
+         :width  "13%"
          :border {:type  :line
                   :right false
                   :fg    "blue"}}
@@ -37,8 +37,8 @@
 (defn right-pane
   []
   [:box {:bottom 3
-         :left   "7%"
-         :width  "14%"
+         :left   "10%"
+         :width  "17%"
          :border {:type :line
                   :left false
                   :fg   "blue"}}

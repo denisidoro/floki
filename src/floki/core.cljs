@@ -39,7 +39,11 @@
                   {:format :json
                    :data (json->edn x)}
                   (catch js/Error e2
-                    (error-input e1 e2 x)))))]
+                (try
+                  {:format :json
+                   :data   (json->edn (str x "}"))}
+                  (catch js/Error e3
+                    (error-input e1 e2 e3 x)))) )))]
     (if (seq res)
       res
       (error-input "Empty document") )))
