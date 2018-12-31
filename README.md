@@ -5,7 +5,7 @@
 
 An EDN/JSON browser for the terminal
 
-<img src="https://user-images.githubusercontent.com/3226564/50401816-89bf5b00-0778-11e9-9e98-8208e2bebd3e.gif"
+<img src="https://user-images.githubusercontent.com/3226564/50562060-d2868f00-0cf7-11e9-928d-f7e4d0a08cb1.gif"
      alt="Demo"
      width=520 />
 
