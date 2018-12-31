@@ -1,4 +1,4 @@
-(defproject floki "0.5.0-SNAPSHOT"
+(defproject floki "0.6.0-SNAPSHOT"
   :description "An EDN/JSON browser for the terminal"
   :url "https://github.com/denisidoro/floki"
   :min-lein-version "2.7.1"

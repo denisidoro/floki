@@ -23,6 +23,7 @@ echo '{"a": 42}' | floki
 
 - directions: `h`, `j`, `k`, `l` or the arrow keys
 - first/last item: `g`/`G`, respectively
+- copy the path: `y`
 - quit: `q`
 
 ### Roadmap
