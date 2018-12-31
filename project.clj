@@ -1,4 +1,4 @@
-(defproject floki "0.3.2-SNAPSHOT"
+(defproject floki "0.3.3-SNAPSHOT"
   :description "An EDN/JSON browser for the terminal"
   :url "https://github.com/denisidoro/floki"
   :min-lein-version "2.7.1"
@@ -31,15 +31,16 @@
                                                               :react-blessed      "0.5.0"
                                                               :react              "16.6.3"
                                                               :react-dom          "16.6.3"
-                                                              :create-react-class "15.6.3"
-                                                              :ws                 "6.1.2"}
+                                                              :create-react-class "15.6.3"}
                                        :install-deps         true}}
                        {:id           "prod"
                         :source-paths ["src"]
                         :compiler     {:output-to     "target/main.js"
                                        :output-dir    "target/js/compiled/prod"
                                        :target        :nodejs
-                                       :optimizations :simple
+                                       :optimizations :advanced
+                                       :externs       ["externs/react.ext.js"
+                                                       "externs/react-dom.ext.js"]
                                        :npm-deps      {:blessed            "0.1.81"
                                                        :react-blessed      "0.5.0"
                                                        :react              "16.6.3"

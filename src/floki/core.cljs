@@ -69,9 +69,9 @@
   (rf/dispatch-sync [:init])
   (load))
 
-(set! (.-log js/console) log-fn)
+; (set! (.-log js/console) log-fn)
 
-(re-frame.loggers/set-loggers! {:log  log-fn
+#_(re-frame.loggers/set-loggers! {:log  log-fn
                                 :warn log-fn})
 
 (set! *main-cli-fn* -main)
