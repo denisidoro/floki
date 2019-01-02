@@ -44,7 +44,7 @@
       (-> data
           conversion/edn->json
           (js/JSON.parse)
-          (js/JSON.colorStringify nil \t)
+          (js/JSON.colorStringify nil 2)
           (str/replace "[35m" "[33m")
           (str/replace "[39m" "[36m")
           (str/replace "[90m" "[97m"))

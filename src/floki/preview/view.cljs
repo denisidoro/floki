@@ -7,7 +7,7 @@
   [:text
    {:left    0
     :top     0
-    :width   50
+    :width   "100%"
     :content @(rf/subscribe [:preview/preview-viewmodel])}])
 
 (defn preview-box
