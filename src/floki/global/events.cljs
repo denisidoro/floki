@@ -2,7 +2,8 @@
   (:require [re-frame.core :as rf]
             [quark.navigation.core :as nav]
             [floki.preview.events]
-            [floki.movement.events]))
+            [floki.movement.events]
+            [floki.global.logic :as l.global]))
 
 (rf/reg-event-db
   :init
@@ -19,4 +20,4 @@
     (assoc db
       :tree/input data
       :tree/format format
-      :tree/paths (nav/paths data))))
+      :tree/paths (sort l.global/custom-compare (nav/paths data)))))
