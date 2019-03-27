@@ -34,7 +34,7 @@ Please refer to the [issues page](https://github.com/denisidoro/floki/issues).
 
 I've used [polymeris/hello-react-blessed](https://gist.github.com/polymeris/5e117676b79a505fe777df17f181ca2e) as a starting point.
 
-If you want to build a tool similar to this, use [eccentric-j/cljs-tui-template](https://github.com/eccentric-j/cljs-tui-template).
+If you want to build a tool similar to this one, use [eccentric-j/cljs-tui-template](https://github.com/eccentric-j/cljs-tui-template).
 
 ### Etymology
 
