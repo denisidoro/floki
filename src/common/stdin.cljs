@@ -16,5 +16,5 @@
   (.on stdin "end"
        (fn []
          ; (print "END EVENT!!!!")
-         (swap! stdinput #(->> % count dec (subs % 0)))
+         (swap! stdinput #(.trim %))
          (callback @stdinput))))
