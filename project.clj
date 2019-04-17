@@ -7,6 +7,7 @@
             :distribution :repo}
   :dependencies [[org.clojure/clojure "1.10.0"]
                  [org.clojure/clojurescript "1.10.439"]
+                 [com.cognitect/transit-cljs "0.8.256"]
                  [reagent "0.8.1" :exclusions [[cljsjs/react]
                                                [cljsjs/react-dom]
                                                [cljsjs/create-react-class]]]
