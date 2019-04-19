@@ -1,5 +1,6 @@
 (ns common.stdin
-  (:require [process :as process]))
+  (:require [process :as process]
+            [clojure.string :as str]))
 
 (def stdinput (atom ""))
 (def stdin (.-stdin process))
@@ -16,5 +17,5 @@
   (.on stdin "end"
        (fn []
          ; (print "END EVENT!!!!")
-         (swap! stdinput #(.trim %))
+         (swap! stdinput #(str/trim %))
          (callback @stdinput))))
