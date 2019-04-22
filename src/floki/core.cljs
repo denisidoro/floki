@@ -22,8 +22,8 @@
 (defn error-input
   [& exceptions]
   {:format :unknown
-   :data  {:error      "Unable to parse JSON/EDN"
-           :exceptions exceptions}})
+   :data   {:error      "Unable to parse JSON/EDN"
+            :exceptions exceptions}})
 
 (defn json->edn
   [json]
@@ -32,18 +32,18 @@
 
 (defn convert
   [x]
-  (let [tr (transit/reader :json)
-        res (try
-              {:format :edn
-               :data (transit/read tr x)}
+  (let [res (try
+              {:format :json
+               :data   (json->edn x)}
               (catch js/Error e0
                 (try
                   {:format :edn
-                   :data (conversion/edn-str->edn x)}
+                   :data   (conversion/edn-str->edn x)}
                   (catch js/Error e1
                     (try
-                      {:format :json
-                       :data (json->edn x)}
+                      (let [tr (transit/reader :json)]
+                        {:format :edn
+                         :data   (transit/read tr x)})
                       (catch js/Error e2
                         (try
                           {:format :json
@@ -60,7 +60,7 @@
   []
   (->> (.-argv js/process)
        (drop 2)
-      last))
+       last))
 
 (defn read-file-handler
   [err buf]
@@ -73,9 +73,9 @@
 (defonce filename (get-filename))
 
 (defonce callback
-         (if filename
-           (fs/readFile filename read-file-handler)
-           (stdin/handler stdin-handler)))
+  (if filename
+    (fs/readFile filename read-file-handler)
+    (stdin/handler stdin-handler)))
 
 (defonce tty-fd
   (fs/openSync "/dev/tty" "r+"))
