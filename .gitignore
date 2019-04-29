@@ -18,3 +18,4 @@ package-lock.json
 yarn.lock
 /bin
 package.bkp.json
+node_modules
