@@ -32,24 +32,20 @@
 
 (defn convert
   [x]
-  (let [res (try
-              {:format :json
-               :data   (json->edn x)}
+  (let [tr (transit/reader :json)
+        res (try
+              {:format :edn
+               :data   (transit/read tr x)}
               (catch js/Error e0
                 (try
                   {:format :edn
                    :data   (conversion/edn-str->edn x)}
                   (catch js/Error e1
                     (try
-                      (let [tr (transit/reader :json)]
-                        {:format :edn
-                         :data   (transit/read tr x)})
+                      {:format :json
+                       :data   (json->edn x)}
                       (catch js/Error e2
-                        (try
-                          {:format :json
-                           :data   (json->edn (str x "}"))}
-                          (catch js/Error e3
-                            (error-input e0 e1 e2 e3 x)))))))))]
+                        (error-input e0 e1 e2 x)))))))]
 
     (if (seq res)
       res
