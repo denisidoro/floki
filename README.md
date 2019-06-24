@@ -5,6 +5,8 @@
 
 A JSON/EDN browser for the terminal
 
+:warning: Work on this repository will be discontinued in favor of [my navigators](https://github.com/denisidoro/dotfiles/blob/7c8b9b8b9111ef8b6f9cb22b721570f7ced22b18/docs/navigators.md). Thank you for all the support! :warning:
+
 <img src="https://user-images.githubusercontent.com/3226564/50562060-d2868f00-0cf7-11e9-928d-f7e4d0a08cb1.gif"
      alt="Demo"
      width=520 />
